@@ -52,6 +52,6 @@ app.listen(port, () => {
 });
 ```
 
-* **2-f.** Test locally: node server.js
+* **2-f.** Test locally: `node server.js`
 * **2-g.** Open http://localhost:3000 in your browser.
 
