@@ -85,6 +85,19 @@ docker build -t my-node-app .
 docker tag my-node-app:latest <aws_account_id>.dkr.ecr.ap-southeast-1.amazonaws.com/my-node-app:latest
 docker push <aws_account_id>.dkr.ecr.ap-southeast-1.amazonaws.com/my-node-app:latest
 ```
+### 🔧 Troubleshooting Docker Build Issues  
+
+#### 1️⃣ Verify IAM User Permissions  
+- Go to the **IAM Console** → **Users** → Select your IAM user.  
+- Under the **Permissions** tab, ensure one of the following:  
+  - ✅ `AmazonEC2ContainerRegistryPowerUser` policy is attached.  
+  - ✅ A custom policy with the necessary **ECR permissions** is attached.  
+
+#### 2️⃣ Check Docker Desktop Credentials (Windows)  
+- Docker uses **credential helpers** for authentication, which can become corrupted.  
+- Try deleting the following file:  
+  ```plaintext
+  %USERPROFILE%\.docker\config.json
 
 ## 4. Deploy to AWS Fargate (ECS)
 
