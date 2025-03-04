@@ -131,8 +131,7 @@ aws ecs run-task --cluster my-fargate-cluster --task-definition my-node-app --la
     * Select your cluster (`my-fargate-cluster`).
     * Go to the "Tasks" tab.
     * Find the running task for your `my-node-app` service and click on the Task ID.
-    * In the "Network" section, look for the "ENI ID" (Elastic Network Interface ID). Click on it.
-    * This will take you to the EC2 Network Interfaces console.
-    * In the "Details" tab of the network interface, find the "Public IPv4 address" and copy it.
+    * Go to the "Configuration" tab.
+    * In the "Network" section, find the "Public IP address" and copy it.
 
 * **4-k.** Test the Application: Open a web browser and navigate to `http://<public-ip-of-fargate-task>:3000`. You should see "Hello from Fargate!" in your browser.
