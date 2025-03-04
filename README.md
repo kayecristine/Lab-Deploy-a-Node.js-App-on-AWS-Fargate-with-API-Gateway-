@@ -141,9 +141,7 @@ aws ecs run-task --cluster my-fargate-cluster --task-definition my-node-app --la
 * **5-a.** First, create a new HTTP API:
 
 ```powershell
-aws apigatewayv2 create-api `
-  --name my-http-api `
-  --protocol-type HTTP
+aws apigatewayv2 create-api --name my-http-api --protocol-type HTTP
 ```
 
 * **5-b.** Create an HTTP Proxy Integration
@@ -151,12 +149,7 @@ aws apigatewayv2 create-api `
 Now, create an HTTP Proxy integration that forwards requests to your backend.
 
 ```powershell
-aws apigatewayv2 create-integration `
-  --api-id 3tv85g48d5 `
-  --integration-type HTTP_PROXY `
-  --integration-uri http://<your-backend-ip>:3000 `  # Replace with your actual backend URL
-  --integration-method GET `
-  --payload-format-version "1.0"
+aws apigatewayv2 create-integration --api-id <api-id> --integration-type HTTP_PROXY --integration-uri http://<your-backend-ip>:3000 --integration-method GET --payload-format-version "1.0"
 ```
    * This will return an `IntegrationId` (e.g., i0o805b). Save it for the next step.
 
@@ -165,10 +158,7 @@ aws apigatewayv2 create-integration `
 You need to define a route that will handle requests, such as `GET /my-endpoint`:
 
 ```powershell
-aws apigatewayv2 create-route `
-  --api-id 3tv85g48d5 `
-  --route-key "GET /my-endpoint" `
-  --target "integrations/i0o805b"
+aws apigatewayv2 create-route --api-id <api-id> --route-key "GET /my-endpoint" --target "integrations/<integration-id>"
 ```
    * Replace "i0o805b" with the actual IntegrationId from 5-b.
 
@@ -177,10 +167,7 @@ aws apigatewayv2 create-route `
 Now, create a stage (e.g., `"prod"`) and deploy the API:
 
 ```powershell
-aws apigatewayv2 create-stage `
-  --api-id 3tv85g48d5 `
-  --stage-name prod `
-  --auto-deploy
+aws apigatewayv2 create-stage --api-id <api-id> --stage-name prod --auto-deploy
 ```
 
 This ensures that changes to the API are automatically deployed, so you don’t have to manually redeploy in the future.
@@ -190,10 +177,9 @@ Test the API
 * **5-e.** Check if your API Gateway is now forwarding requests properly:
 
 ```powershell
-curl https://3tv85g48d5.execute-api.ap-southeast-1.amazonaws.com/prod/my-endpoint
+aws apigatewayv2 get-api --api-id <your-api-id>
+curl https://<your-api-id>.execute-api.ap-southeast-1.amazonaws.com/prod/my-endpoint
 ```
-
-   * Replace 3tv85g48d5 with your actual API Gateway ID.
 
 If your backend is working correctly, you should get a valid response from http://<your-backend-ip>:3000.
 
