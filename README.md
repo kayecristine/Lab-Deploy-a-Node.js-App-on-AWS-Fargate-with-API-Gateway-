@@ -135,3 +135,65 @@ aws ecs run-task --cluster my-fargate-cluster --task-definition my-node-app --la
     * In the "Network" section, find the "Public IP address" and copy it.
 
 * **4-k.** Test the Application: Open a web browser and navigate to `http://<public-ip-of-fargate-task>:3000`. You should see "Hello from Fargate!" in your browser.
+
+# 5. Create the HTTP API
+
+* **5-a.** First, create a new HTTP API:
+
+```powershell
+aws apigatewayv2 create-api `
+  --name my-http-api `
+  --protocol-type HTTP
+```
+
+* **5-b.** Create an HTTP Proxy Integration
+
+Now, create an HTTP Proxy integration that forwards requests to your backend.
+
+```powershell
+aws apigatewayv2 create-integration `
+  --api-id 3tv85g48d5 `
+  --integration-type HTTP_PROXY `
+  --integration-uri http://<your-backend-ip>:3000 `  # Replace with your actual backend URL
+  --integration-method GET `
+  --payload-format-version "1.0"
+```
+   * This will return an `IntegrationId` (e.g., i0o805b). Save it for the next step.
+
+* **5-c.** Create a Route to Attach the Integration
+
+You need to define a route that will handle requests, such as `GET /my-endpoint`:
+
+```powershell
+aws apigatewayv2 create-route `
+  --api-id 3tv85g48d5 `
+  --route-key "GET /my-endpoint" `
+  --target "integrations/i0o805b"
+```
+   * Replace "i0o805b" with the actual IntegrationId from 5-b.
+
+* **5-d.** Create a Stage & Deploy the API
+
+Now, create a stage (e.g., `"prod"`) and deploy the API:
+
+```powershell
+aws apigatewayv2 create-stage `
+  --api-id 3tv85g48d5 `
+  --stage-name prod `
+  --auto-deploy
+```
+
+This ensures that changes to the API are automatically deployed, so you don’t have to manually redeploy in the future.
+
+Test the API
+
+* **5-e.** Check if your API Gateway is now forwarding requests properly:
+
+```powershell
+curl https://3tv85g48d5.execute-api.ap-southeast-1.amazonaws.com/prod/my-endpoint
+```
+
+   * Replace 3tv85g48d5 with your actual API Gateway ID.
+
+If your backend is working correctly, you should get a valid response from http://<your-backend-ip>:3000.
+
