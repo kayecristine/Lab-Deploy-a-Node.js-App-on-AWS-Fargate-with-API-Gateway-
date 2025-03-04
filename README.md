@@ -28,7 +28,7 @@ This lab guides you through deploying a Node.js application on AWS Fargate using
     * Set your AWS region (e.g., `ap-southeast-1`).
     * Choose `json` as the output format.
     * Verify configuration: `aws sts get-caller-identity`
-        * ✅ You should see your IAM User ARN.
+        * You should see your IAM User ARN.
 
 ## 2. Create a Simple Node.js App
 
