@@ -55,3 +55,35 @@ app.listen(port, () => {
 * **2-f.** Test locally: `node server.js`
 * **2-g.** Open http://localhost:3000 in your browser.
 
+* ## 3. Build and Push Docker Image to ECR
+
+* **3-a.** Create a `Dockerfile`: In the `my-fargate-app` directory, create a file named `Dockerfile` (no extension).
+* **3-b.** Add the following content:
+
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+* **3-c.** Create an ECR Repository (in your chosen region, e.g., `ap-southeast-1`): `aws ecr create-repository --repository-name my-node-app --region ap-southeast-1`
+* **3-d.** Find your ECR URL: `aws ecr describe-repositories --region ap-southeast-1 | findstr repositoryUri`
+* **3-e.** Authenticate Docker with ECR: Replace `<aws_account_id>` with your AWS account ID.
+
+```bash
+aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.ap-southeast-1.amazonaws.com
+```
+
+* **3-f.** Build & Push Image:
+
+```bash
+docker build -t my-node-app .
+docker tag my-node-app:latest <aws_account_id>[.dkr.ecr.ap-southeast-1.amazonaws.com/my-node-app:latest](https://www.google.com/search?q=https://.dkr.ecr.ap-southeast-1.amazonaws.com/my-node-app:latest)
+docker push <aws_account_id>[.dkr.ecr.ap-southeast-1.amazonaws.com/my-node-app:latest](https://www.google.com/search?q=https://.dkr.ecr.ap-southeast-1.amazonaws.com/my-node-app:latest)
+```
+
+
