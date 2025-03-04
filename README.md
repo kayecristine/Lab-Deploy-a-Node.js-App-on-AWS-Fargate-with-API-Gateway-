@@ -19,7 +19,6 @@ This lab guides you through deploying a Node.js application on AWS Fargate using
   ❗ **Use this step ONLY if there are no existing IAM users with the required permissions.** If IAM users are already available, use their credentials instead.
     * Go to AWS Console → IAM → Users → Add user.
     * Enter a username (e.g., `fargate-user`).
-    * Under Access type, select ☑️ Access key - Programmatic access.
     * Attach the `AdministratorAccess` policy (for simplicity, or create custom permissions for ECS, ECR, and API Gateway). **Important:** Later in production you should use the least privilege principal.
     * Click Create user, then copy the Access Key ID & Secret Access Key.
 * **1-c. Configure AWS CLI with the IAM user:**
