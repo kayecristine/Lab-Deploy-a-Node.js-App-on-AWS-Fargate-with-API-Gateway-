@@ -49,4 +49,9 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
-}); 
+});
+```
+
+* **2-f.** Test locally: node server.js
+* **2-g.** Open http://localhost:3000 in your browser.
+
