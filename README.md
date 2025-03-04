@@ -126,12 +126,13 @@ docker push <aws_account_id>[.dkr.ecr.ap-southeast-1.amazonaws.com/my-node-app:l
 aws ecs run-task --cluster my-fargate-cluster --task-definition my-node-app --launch-type FARGATE --network-configuration "awsvpcConfiguration={subnets=[subnet-xxxxx, subnet-xxxxx],securityGroups=[sg-xxxxx],assignPublicIp=ENABLED}" --region ap-southeast-1
 ```
 
-* **4-j.** Get the Public IP Address:
+* **4-j.** Get the Public IP Address (Manual Console Retrieval):
+    * Go to the AWS ECS console.
+    * Select your cluster (`my-fargate-cluster`).
+    * Go to the "Tasks" tab.
+    * Find the running task for your `my-node-app` service and click on the Task ID.
+    * In the "Network" section, look for the "ENI ID" (Elastic Network Interface ID). Click on it.
+    * This will take you to the EC2 Network Interfaces console.
+    * In the "Details" tab of the network interface, find the "Public IPv4 address" and copy it.
 
-```bash
-aws ecs list-tasks --cluster my-fargate-cluster --region ap-southeast-1
-aws ecs describe-tasks --cluster my-fargate-cluster --tasks <task-id> --region ap-southeast-1
-```
-
-* Find the `networkInterfaces` section, then the `association` object, and copy the `publicIp` value.
 * **4-k.** Test the Application: Open a web browser and navigate to `http://<public-ip-of-fargate-task>:3000`. You should see "Hello from Fargate!" in your browser.
