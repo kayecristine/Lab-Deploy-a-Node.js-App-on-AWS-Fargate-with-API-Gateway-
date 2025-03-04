@@ -82,8 +82,8 @@ aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS
 
 ```bash
 docker build -t my-node-app .
-docker tag my-node-app:latest <aws_account_id>[.dkr.ecr.ap-southeast-1.amazonaws.com/my-node-app:latest](https://www.google.com/search?q=https://.dkr.ecr.ap-southeast-1.amazonaws.com/my-node-app:latest)
-docker push <aws_account_id>[.dkr.ecr.ap-southeast-1.amazonaws.com/my-node-app:latest](https://www.google.com/search?q=https://.dkr.ecr.ap-southeast-1.amazonaws.com/my-node-app:latest)
+docker tag my-node-app:latest <aws_account_id>.dkr.ecr.ap-southeast-1.amazonaws.com/my-node-app:latest
+docker push <aws_account_id>.dkr.ecr.ap-southeast-1.amazonaws.com/my-node-app:latest
 ```
 
 ## 4. Deploy to AWS Fargate (ECS)
