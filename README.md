@@ -15,8 +15,8 @@ This lab guides you through deploying a Node.js application on AWS Fargate using
     * **Node.js:**
         * Download and install Node.js from the official Node.js website.
         * Verify installation: `node -v`
-* **1-b. (Only If No IAM Users Exist) Create an IAM User with Programmatic Access:**
-*❗ Use this step ONLY if there are no existing IAM users with the required permissions. If IAM users are already available, use their credentials instead.
+* **1-b. (Only If No IAM Users Exist) Create an IAM User with Programmatic Access:**  
+  ❗ **Use this step ONLY if there are no existing IAM users with the required permissions.** If IAM users are already available, use their credentials instead.
     * Go to AWS Console → IAM → Users → Add user.
     * Enter a username (e.g., `fargate-user`).
     * Under Access type, select ☑️ Access key - Programmatic access.
